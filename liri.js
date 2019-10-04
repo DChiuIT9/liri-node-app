@@ -41,7 +41,7 @@ function liriaction(commands){
          
           console.log(JSON.stringify(data.tracks.items[0]));
         console.log(
-          "\nArtist: " + JSON.stringify(data.tracks.items[0].album.artists) +
+          "\nArtist: " + data.tracks.items[0].album.artists[0].name +
           "\nSong name: " + data.tracks.items[0].name +
           "\nPreview link: " + data.tracks.items[0].preview_url +
           "\nAlbum: "
