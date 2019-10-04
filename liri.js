@@ -39,12 +39,12 @@ function liriaction(commands){
             return console.log('Error occurred: ' + err);
           }
          
-          console.log(JSON.stringify(data));
+          console.log(JSON.stringify(data.tracks.items[0]));
         console.log(
-          "Artist: " + data.tracks.items +
-          "Song name: " +
-          "Preview link: " +
-          "Album: "
+          "\nArtist: " + JSON.stringify(data.tracks.items[0].album.artists) +
+          "\nSong name: " + data.tracks.items[0].name +
+          "\nPreview link: " + data.tracks.items[0].preview_url +
+          "\nAlbum: "
         
         );
         });
