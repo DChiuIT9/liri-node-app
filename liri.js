@@ -1,8 +1,10 @@
-// require("dotenv").config()
+// require("dotenv").config();
 
 var keys = require("./keys.js");
 
+// var Spotify = require('node-spotify-api');
 // var spotify = new Spotify(keys.spotify);
+
 
 var axios = require("axios");
 var fs = require("fs");
@@ -17,8 +19,27 @@ function liriaction(commands){
   var userInput = process.argv.slice(3).join(" ");
   switch(commands){
     case "concert-this":
+        axios.get("https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp").then(function(response){
+          console.log(
+            "============== concert-this ==============" +
+            "\nSearch: " + userInput +
+            "\nName of the venue: " + response.data[0].venue.name +
+            "\nVenue Location: " + response.data[0].venue.city + ", " + response.data[0].venue.country +
+            "\nDate of the Event: " + response.data[0].datetime
+          );
+
+        })
+
+
     break;
     case "spotify-this-song":
+        spotify.search({ type: 'track', query: userInput }, function(err, data) {
+          if (err) {
+            return console.log('Error occurred: ' + err);
+          }
+         
+        console.log(data); 
+        });
     break;
     case "movie-this":
       if (userInput == "") {
@@ -58,8 +79,9 @@ function liriaction(commands){
         if (err) {
           console.log(err);
         }
-
-
+        process.argv[2] = data.split(",")[0];
+        process.argv[3] = data.split(",")[1];
+        liriaction(process.argv[2]);
       })
     break;
   }
