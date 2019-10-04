@@ -1,9 +1,9 @@
-// require("dotenv").config();
+require("dotenv").config();
 
 var keys = require("./keys.js");
 
-// var Spotify = require('node-spotify-api');
-// var spotify = new Spotify(keys.spotify);
+var Spotify = require('node-spotify-api');
+var spotify = new Spotify(keys.spotify);
 
 
 var axios = require("axios");
@@ -39,7 +39,14 @@ function liriaction(commands){
             return console.log('Error occurred: ' + err);
           }
          
-        console.log(data); 
+          console.log(JSON.stringify(data));
+        console.log(
+          "Artist: " + data.tracks.items +
+          "Song name: " +
+          "Preview link: " +
+          "Album: "
+        
+        );
         });
     break;
     case "movie-this":
