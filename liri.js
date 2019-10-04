@@ -9,6 +9,8 @@ var keys = require("./keys.js");
 var axios = require("axios");
 var fs = require("fs");
 
+var moment = require('moment');
+
 // Commands:
 // * `concert-this`
 // * `spotify-this-song`
@@ -25,9 +27,8 @@ function liriaction(commands){
             "\nSearch: " + userInput +
             "\nName of the venue: " + response.data[0].venue.name +
             "\nVenue Location: " + response.data[0].venue.city + ", " + response.data[0].venue.country +
-            "\nDate of the Event: " + response.data[0].datetime.substring(5, 7) + "/" + response.data[0].datetime.substring(8, 10) + "/" + response.data[0].datetime.substring(0, 4)
+            "\nDate of the Event: " + moment(response.data[0].datetime).format("MM/DD/YYYY")
           );
-
         })
 
 
