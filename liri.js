@@ -25,7 +25,7 @@ function liriaction(commands){
             "\nSearch: " + userInput +
             "\nName of the venue: " + response.data[0].venue.name +
             "\nVenue Location: " + response.data[0].venue.city + ", " + response.data[0].venue.country +
-            "\nDate of the Event: " + response.data[0].datetime
+            "\nDate of the Event: " + response.data[0].datetime.substring(5, 7) + "/" + response.data[0].datetime.substring(8, 10) + "/" + response.data[0].datetime.substring(0, 4)
           );
 
         })
