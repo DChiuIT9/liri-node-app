@@ -1,68 +1,69 @@
+// require("dotenv").config()
+
+var keys = require("./keys.js");
+
+// var spotify = new Spotify(keys.spotify);
+
 var axios = require("axios");
 var fs = require("fs");
-var keys = require("./keys.js")
+
+// Commands:
+// * `concert-this`
+// * `spotify-this-song`
+// * `movie-this`
+// * `do-what-it-says`
+
+function liriaction(commands){
+  var userInput = process.argv.slice(3).join(" ");
+  switch(commands){
+    case "concert-this":
+    break;
+    case "spotify-this-song":
+    break;
+    case "movie-this":
+      if (userInput == "") {
+        axios.get("http://www.omdbapi.com/?t=Mr.+Nobody&i=tt3896198&apikey=trilogy").then(function(response){
+          console.log(
+            "============== movie-this ==============" +
+            "\nTitle: " + response.data.Title +
+            "\nYear: " + response.data.Year +
+            "\nRating: " + response.data.Rated +
+            "\nRotten Tomatoes Rating: " + response.data.Ratings[1].Value +
+            "\nCountry: " + response.data.Country +
+            "\nLanguage: " + response.data.Language +
+            "\nPlot: " + response.data.Plot +
+            "\nActors: " + response.data.Actors + "\n"
+            );
+          console.log("If you haven't watched Mr. Nobody, then you should: <http://www.imdb.com/title/tt0485947/>")
+          console.log("It's on Netflix!")
+        })
+      } else {
+        axios.get("http://www.omdbapi.com/?t=" + userInput + "&i=tt3896198&apikey=trilogy").then(function(response){
+          console.log(
+            "============== movie-this ==============" +
+            "\nTitle: " + response.data.Title +
+            "\nYear: " + response.data.Year +
+            "\nRating: " + response.data.Rated +
+            "\nRotten Tomatoes Rating: " + response.data.Ratings[1].Value +
+            "\nCountry: " + response.data.Country +
+            "\nLanguage: " + response.data.Language +
+            "\nPlot: " + response.data.Plot +
+            "\nActors: " + response.data.Actors
+            );
+        })
+      };
+    break;
+    case "do-what-it-says":
+      fs.readFile("random.txt", "utf8", function(err, data){
+        if (err) {
+          console.log(err);
+        }
 
 
-
-
-function searchApi(query){
-  switch(query){
-    case 'show':
-            axios.get('http://api.tvmaze.com/search/shows?q=' + process.argv.slice(3).join("%"))
-            .then(function(response){
-                // console.log("Title: " + response.data[0].show.name);
-                // console.log("Genres: " + response.data[0].show.genres);
-                // console.log("Rating: " + response.data[0].show.rating.average);
-                // console.log("Network: " + response.data[0].show.network.name);
-                // console.log("Summary: " + response.data[0].show.summary);     
-                var showData = [`
-
-
-Title: ${response.data[0].show.name}
-Genres: ${response.data[0].show.genres}
-Rating: ${response.data[0].show.rating.average}
-Network: ${response.data[0].show.network.name}
-Summary: ${response.data[0].show.summary}
-
-
-                `]; 
-
-                fs.appendFile("log.txt", showData, function (err) {
-                    if (err) {
-                        console.log(err);
-                    }                
-                    else {
-                        console.log("Content Added!");
-                    }
-                });
-                
-                console.log(showData);
-
-            })
-
-      break;
-    case 'actor':
-        var actor = process.argv.slice(3).join("%");
-    axios.get("http://api.tvmaze.com/search/people?q=" + actor)
-    .then(function(response){
-        console.log(`
-
-        Name: ${response.data[0].person.name}
-        Birthday: ${response.data[0].person.birthday}
-        Gender: ${response.data[0].person.gender}
-        Country: ${response.data[0].person.country.name}
-
-        `);
-    });
-
-      break;
-
-    default:
-      console.log('Search for a TV show or an Actor in the following format:')
-      console.log('node app.js tv The Expanse');
-      console.log('node app.js actor Jude Law');
-      break;
+      })
+    break;
   }
+
 }
 
-searchApi(process.argv[2]);
+liriaction(process.argv[2])
